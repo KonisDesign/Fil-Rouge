@@ -8,7 +8,7 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    background: url("https://cdn.pixabay.com/photo/2016/07/20/10/57/nebula-10-1530144_1280.png");
+    background: url("../../assets/background.webp");
     background-size: cover;
     background-position: center center;
     z-index: 1;
@@ -18,29 +18,31 @@
         align-items: center;
         gap: 20px;
         position: absolute;
-        top: 25px;
-        right: 100px;
-        padding: 14px 22px;
-        border: 1px solid black;
+        top: 40px;
+        right: 80px;
+        padding: 16px 32px;
+        border: none;
         border-radius: 6px;
         background: #09B097;
         color: #ffffff;
         cursor: pointer;
-
-        
+        box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 
         .switch-arrow {
             display: flex;
             flex-direction: column;
+
             i {
                 font-size: 17px;
                 transition: all .2s ease-in-out;
             }
+
             .fa-arrow-right {
-                transform: translateX(5px) translateY(4px);
+                transform: translateX(6px) translateY(3px);
             }
+
             .fa-arrow-left {
-                transform: translateX(-5px) translateY(-3px);
+                transform: translateX(-6px) translateY(-3px);
             }
         }
 
@@ -48,8 +50,9 @@
             .fa-arrow-left {
                 transform: translate(-10px, -3px);
             }
+
             .fa-arrow-right {
-                transform: translate(10px, 4px);
+                transform: translate(10px, 3px);
             }
         }
     }

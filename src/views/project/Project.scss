@@ -1,0 +1,109 @@
+$volet : #1B2C3E;
+$green : #09B097;
+$greenhover : #46BCA9;
+$red : #ff3d60;
+$redhover : #ff4d6e;
+$orange : #FCB92B;
+$orangehover : #fcc143;
+
+.project-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    .project-description {
+        width: calc(96% - 300px);
+        height: auto;
+        margin-left: 300px;
+        padding: 60px 2% 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .infos {
+            width: 30%;
+            height: auto;
+
+            .title {
+                font-size: 60px;
+                text-align: left;
+            }
+        }
+
+        img {
+            width: 60%;
+            height: auto;
+            max-height: 600px;
+            object-fit: cover;
+        }
+    }
+
+    .members-container {
+        width: calc(96% - 300px);
+        height: auto;
+        margin-left: 300px;
+        padding: 0px 2%;
+        display: flex;
+        justify-content: flex-end;
+        gap: 5px;
+
+        img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 1);
+            border-radius: 25px;
+            box-shadow: 0px 8px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    .work-container {
+        width: calc(96% - 300px);
+        height: auto;
+        margin-left: 300px;
+        padding: 40px 2% 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .work {
+            width: 30%;
+            height: auto;
+            padding: 10px 2% 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            background-color: #fff;
+            box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+            h2 {
+                margin: 10px 0px;
+            }
+
+            .item {
+                width: 96%;
+                height: auto;
+                padding: 12px 2%;
+                border-radius: 5px;
+                color: #fff;
+            }
+
+            .task {
+                background-color: $orange;
+            }
+
+            .notif {
+                background-color: $red;
+            }
+
+            .comment {
+                background-color: $volet;
+            }
+        }
+    }
+}

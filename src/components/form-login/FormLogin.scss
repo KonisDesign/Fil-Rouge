@@ -1,7 +1,7 @@
 .login-container {
     margin-bottom: 50px;
-    background: rgba(255, 255, 255,.85);
-    padding: 50px 100px 50px;
+    background: rgba(255, 255, 255, .85);
+    padding: 50px 80px 50px;
     border-radius: 10px;
 
 
@@ -15,7 +15,7 @@
         padding: 15px 10px;
         margin-top: 30px;
         position: relative;
-        
+
         label {
             position: absolute;
             top: 50%;
@@ -24,6 +24,7 @@
             transition: all 0.25s ease-in-out;
             z-index: 0;
         }
+
         input {
             padding: 10px 5px;
             border: none;
@@ -32,13 +33,15 @@
             outline: none;
             z-index: 10;
             position: relative;
-            &:focus ~ label {
+
+            &:focus~label {
                 top: 10px;
                 left: 5px;
                 font-size: 14px;
-              }
+            }
         }
     }
+
     .button-login {
         margin-top: 50px;
     }

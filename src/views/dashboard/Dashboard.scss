@@ -1,0 +1,25 @@
+.dashboard {
+    width: 100%;
+    height: auto;
+
+    .tab-main {
+        width: auto;
+        height: auto;
+        margin: 20px 0px 0px 300px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        .tab-button {
+            border: none;
+            border-bottom: 1px solid transparent;
+            background-color: transparent;
+            color: #636E75;
+            font-weight: 500;
+
+            &:hover {
+                border-bottom: 1px solid #636E75;
+            }
+        }
+    }
+}

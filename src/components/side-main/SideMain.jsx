@@ -3,8 +3,8 @@ import './SideMain.scss'
 
 export default function SideMain() {
     return (
-        <div className='side-main'> 
-            <img className='profile-pic' src="/assets/profile.webp" alt='profile'/>
+        <div className='side-main'>
+            <img className='profile-pic' src="/src/assets/profile.webp" alt='profile' />
             <h2>Bonjour Michel</h2>
             <div className='notifs-container'>
                 <h4>Dernières notifications</h4>
@@ -22,7 +22,7 @@ export default function SideMain() {
                 </div>
             </div>
             <footer>
-                <p>Designed by Romain & Julien</p>
+                <p>Designed by Romain, Kalilou & Julien</p>
             </footer>
         </div>
     )

@@ -1,0 +1,97 @@
+.register-container {
+    background: rgba(255, 255, 255, .85);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 50px 80px 50px;
+
+    .register-top {
+        display: flex;
+        gap: 35px;
+
+        .register-top-left {
+            position: relative;
+
+            img,
+            .dropzone {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            img {
+                object-fit: cover;
+            }
+
+            .dropzone {
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border: 2px dashed #ccc;
+                background: rgba(102, 102, 102, 0.5);
+                opacity: 0;
+                transition: all .2s ease-in;
+
+                &.show-dropzone {
+                    opacity: 1;
+                }
+
+                i {
+                    font-size: 48px;
+                    color: #e8e8e8;
+                    text-align: center;
+                    margin-top: 20px;
+                }
+            }
+        }
+
+        .register-top-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
+    .email-register,
+    .password-register,
+    .lastname-register,
+    .firstname-register {
+        padding: 15px 10px;
+        position: relative;
+
+        label {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            transition: all 0.25s ease-in-out;
+            z-index: 0;
+        }
+
+        input {
+            padding: 10px 5px;
+            border: none;
+            border-bottom: 1px solid;
+            background-color: transparent;
+            outline: none;
+            z-index: 10;
+            position: relative;
+            width: 100%;
+
+            &:focus~label {
+                top: 10px;
+                left: 5px;
+                font-size: 14px;
+            }
+        }
+    }
+
+    .button-register {
+        margin: auto;
+        width: 50%;
+    }
+}

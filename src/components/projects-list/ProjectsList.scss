@@ -1,0 +1,9 @@
+.projects-container {
+    width: calc(100% - 300px);
+    height: auto;
+    margin-left: 300px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}

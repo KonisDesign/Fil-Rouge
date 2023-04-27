@@ -1,0 +1,70 @@
+.project-card {
+    width: 30%;
+    aspect-ratio: 1/1;
+    margin-top: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #fff;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    cursor: pointer;
+
+    .project-image {
+        width: 100%;
+        aspect-ratio: 2/1;
+        object-fit: cover;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    h3 {
+        width: 90%;
+        margin: 1vw 0px 0.4vw;
+        font-size: 1.4vw;
+    }
+
+    p {
+        width: 90%;
+        aspect-ratio: 3.5/1;
+        margin: 0;
+        font-size: 0.9vw;
+    }
+
+    .row {
+        width: auto;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 30px;
+        right: 15px;
+
+        img {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            object-fit: cover;
+            position: absolute;
+
+            &:nth-child(1) {
+                right: 60px;
+            }
+
+            &:nth-child(2) {
+                right: 40px;
+            }
+
+            &:nth-child(3) {
+                right: 20px;
+            }
+
+            &:nth-child(4) {
+                right: 0px;
+            }
+        }
+    }
+}
