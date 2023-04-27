@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+$grey : #F3F3F4;
+$green : #09B097;
+$greenhover : #46BCA9;
+
+html, body {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    background-color: $grey;
+    font-family: 'Roboto', sans-serif;
+}
+
+button {
+    cursor: pointer;
+}
+
+h1 {
+    margin: 0;
+}
+
+h4 {
+    font-weight: 300;
+}
+
+.primary-button {
+    width: auto;
+    height: auto;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background-color: $green;
+    color: #fff;
+    cursor: pointer;
+    transition: all .5s linear;
+
+    &:hover {
+        background-color: $greenhover;
+    }
+}
+
+.secondary-button {
+    width: auto;
+    height: auto;
+    padding: 14px 18px;
+    border: 2px solid $green;
+    border-radius: 10px;
+    background-color: transparent;
+    color: $green;
+    cursor: pointer;
+    transition: all .5s linear;
+
+    &:hover {
+        background-color: $greenhover;
+    }
+}
+
+.icon-button {
+    border: none;
+    background-color: transparent;
+    color: #636E75;
+    font-size: 20px;
+}
