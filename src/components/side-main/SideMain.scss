@@ -17,6 +17,7 @@ $orangehover : #fcc143;
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 5;
 
     .profile-pic {
         width: 60%;
@@ -77,7 +78,7 @@ $orangehover : #fcc143;
 
         .important {
             background-color: $red;
-            
+
             &:hover {
                 background-color: $redhover;
             }
@@ -85,7 +86,7 @@ $orangehover : #fcc143;
 
         .other {
             background-color: $orange;
-            
+
             &:hover {
                 background-color: $orangehover;
             }
@@ -100,5 +101,6 @@ $orangehover : #fcc143;
         position: absolute;
         bottom: 0;
         left: 0;
+        font-size: 12px;
     }
 }

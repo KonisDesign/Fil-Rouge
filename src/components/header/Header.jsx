@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import './Header.scss'
 
 export default function Header() {
@@ -17,9 +17,9 @@ export default function Header() {
 
   return (
     <div className='header'>
-      <h1>Tableau de bord</h1>
+      <Link to="/" className='logo'><img src='/favicon.ico' /></Link>
       <div className='header-actions'>
-        <button className='icon-button' onClick={() => handleClickHome()}><i class="fa-regular fa-folder-open"></i></button>
+        <button className='icon-button' onClick={() => handleClickHome()}><i className="fa-regular fa-folder-open"></i></button>
         <button className='icon-button' onClick={() => handleClickLogout()}><i className="fa-solid fa-arrow-right-from-bracket"></i></button>
       </div>
     </div>

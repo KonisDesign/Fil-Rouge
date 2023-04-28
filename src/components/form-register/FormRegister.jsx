@@ -2,10 +2,14 @@ import React, { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone';
 import './FormRegister.scss'
 import ProfilePicture from '/src/assets/profile.webp'
+import FormInputLogin from '../form-input-login/FormInputLogin'
 
 export default function FormRegister() {
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
+    setSelectedImage(acceptedFiles[0]);
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -22,39 +26,50 @@ export default function FormRegister() {
   const handleMouseLeave = () => {
     setIsActive(false);
   };
+
   return (
-    <form className="register-container">
-      <h1>S'enregistrer</h1>
-      <div className="register-top">
-        <div className="register-top-left"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}>
-          <div {...getRootProps()} className={`dropzone ${isActive ? 'show-dropzone' : ''}`}>
-            <input {...getInputProps()} />
-            <i className="fa-solid fa-pencil"></i>
+    <FormInputLogin
+      component="register"
+      title="S'enregistrer"
+      divTop={
+        <div className="register-top">
+          <div className="register-top-left"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}>
+            <div {...getRootProps()} className={`dropzone ${isActive ? 'show-dropzone' : ''}`}>
+              <input {...getInputProps()} />
+              <i className="fa-solid fa-pencil"></i>
+            </div>
+            {selectedImage ?
+              <img src={URL.createObjectURL(selectedImage)} alt="profile picture" /> :
+              <img src={ProfilePicture} alt="profile picture" />
+            }
           </div>
-          <img src={ProfilePicture} alt="" />
+          <div className="register-top-right">
+            <div className="lastname-register">
+              <input type="text" name="lastname-input" />
+              <label className='login-label'>Nom</label>
+            </div>
+            <div className="firstname-register">
+              <input type="email" name="firstname-input" />
+              <label className='login-label'>Prénom</label>
+            </div>
+          </div>
         </div>
-        <div className="register-top-right">
-          <div className="lastname-register">
-            <input type="email" name="" id="" />
-            <label className='login-label' htmlFor="">Nom</label>
+      }
+      divBottom={
+        <div className="register-bottom">
+          <div className="email-register">
+            <input type="email" name="email-input" />
+            <label className='login-label'>Adresse Email</label>
           </div>
-          <div className="firstname-register">
-            <input type="email" name="" id="" />
-            <label className='login-label' htmlFor="">Prénom</label>
+          <div className="password-register">
+            <input type="password" name="password-input" />
+            <label className='login-label'>Mot de passe</label>
           </div>
         </div>
-      </div>
-      <div className="email-register">
-        <input type="email" name="" id="" />
-        <label className='login-label' htmlFor="">Adresse Email</label>
-      </div>
-      <div className="password-register">
-        <input type="password" name="" id="" />
-        <label className='login-label' htmlFor="">Mot de passe</label>
-      </div>
-      <div className="primary-button button-register">M'inscrire</div>
-    </form>
+      }
+      buttonText="M'inscrire"
+    />
   )
 }

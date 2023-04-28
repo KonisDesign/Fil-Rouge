@@ -40,9 +40,15 @@ export default function Project() {
         </div>
         <div className='work'>
           <h2>Commentaires</h2>
-          <div className='item comment'>Faire l'UML</div>
-          <div className='item comment'>Faire Le frontend en react</div>
-          <div className='item comment'>Faire le backend en nodejs</div>
+          <div className="comment-container">
+            <div className='item comment'>Faire l'UML</div>
+            <div className='item comment'>Faire Le frontend en react</div>
+            <div className='item comment'>Faire le backend en nodejs</div>
+          </div>
+          <div className='actions'>
+            <input type="text" placeholder="Écrivez quelque chose.." />
+            <button className='send-button'><i className="fa-regular fa-paper-plane"></i></button>
+          </div>
         </div>
       </div>
     </div>

@@ -2,9 +2,9 @@ import React from 'react'
 import './ProjectsList.scss'
 import ProjectCard from '../project-card/ProjectCard'
 
-export default function ProjectsList() {
+export default function ProjectsList(props) {
     return (
-        <div className='projects-container'>
+        <div className={`projects-container ${props.addClass ? 'projects-enter' : 'projects-exit'}`}>
             <ProjectCard />
             <ProjectCard />
             <ProjectCard />

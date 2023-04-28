@@ -17,7 +17,7 @@ $orangehover : #fcc143;
     .project-description {
         width: calc(96% - 300px);
         height: auto;
-        margin-left: 300px;
+        margin: 50px 0px 0px 300px;
         padding: 60px 2% 20px;
         display: flex;
         justify-content: space-between;
@@ -103,6 +103,47 @@ $orangehover : #fcc143;
 
             .comment {
                 background-color: $volet;
+            }
+
+            .comment-container {
+                width: 100%;
+                height: auto;
+                max-height: 400px;
+                overflow-y: scroll;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+
+            .actions {
+                width: 96%;
+                height: auto;
+                margin: 20px 2% 0px;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: nowrap;
+
+                input {
+                    width: calc(100% - 40px);
+                    max-width: 100%;
+                    padding: 8px 0px;
+                    border: none;
+                    border-bottom: 1px solid #636E75;
+                }
+
+                .send-button {
+                    width: 40px;
+                    height: auto;
+                    border: none;
+                    border-bottom: 1px solid #636E75;
+                    background-color: transparent;
+                    color: #636E75;
+                }
             }
         }
     }

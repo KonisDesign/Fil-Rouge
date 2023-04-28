@@ -6,4 +6,15 @@
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    transition: all 1s ease-in-out;
+
+    &.projects-enter {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    &.projects-exit {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
 }
