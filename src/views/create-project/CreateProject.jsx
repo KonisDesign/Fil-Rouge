@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import CollabsDetails from '../../components/collabs-details/CollabsDetails';
 import './CreateProject.scss';
@@ -90,7 +90,7 @@ export default function CreateProject() {
                     {task.map((item, index) => (
                         <div key={index} className='item'>
                             <p>- {item}</p>
-                            <button><i class="fa-regular fa-trash-can"></i></button>
+                            <button><i className="fa-regular fa-trash-can"></i></button>
                         </div>
                     ))}
                 </div>
