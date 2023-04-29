@@ -8,21 +8,45 @@
     justify-content: flex-start;
     align-items: center;
     gap: 25px;
-    transition: all 1s ease-out;
+    transition: all 1s ease-in-out;
+    transform: translateX(100%);
+    position: absolute;
+    top: 112px;
 
     &.collabs-enter {
+        position: absolute;
+        top: 112px;
         opacity: 0;
-        transform: translateX(100%);
     }
 
     &.collabs-enter-active {
+        position: absolute;
+        top: 112px;
         opacity: 1;
         transform: translateX(0);
-        transition: all 1s;
+    }
+
+    &.collabs-enter-done {
+        position: initial;
+        opacity: 1;
+        transform: translateX(0);
     }
 
     &.collabs-exit {
+        opacity: 1;
+    }
+
+    &.collabs-exit-active {
+        position: absolute;
+        top: 112px;
         transform: translateX(100%);
         opacity: 0;
+    }
+
+    &.collabs-exit-done {
+        transform: translateX(100%);
+        top: 112px;
+        opacity: 0;
+        position: absolute;
     }
 }

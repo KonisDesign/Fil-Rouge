@@ -1,8 +1,7 @@
-import React from 'react'
 import './ListCollabs.scss'
 import CollabsDetails from '../collabs-details/CollabsDetails'
 
-export default function ListCollabs(props) {
+export default function ListCollabs() {
     const infos = [
         {
             imageUrl: 'src/assets/profile.webp',

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { CSSTransition } from 'react-transition-group';
+import { useState } from 'react'
+import {CSSTransition} from "react-transition-group"
 import './Dashboard.scss'
 import SideMain from '../../components/side-main/SideMain'
 import Header from '../../components/header/Header'
@@ -10,16 +10,8 @@ import ListCollabs from '../../components/list-collabs/ListCollabs'
 export default function Dashboard() {
   const [displayComponentProject, setDisplayComponentProject] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDisplayComponentProject(true);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   const toggleComposant = (boolean) => {
     setDisplayComponentProject(boolean);
-    console.log(displayComponentProject)
   };
 
   return (
@@ -38,18 +30,16 @@ export default function Dashboard() {
         </div>
       </div>
       <CSSTransition
-        in={!displayComponentProject}
+        in={displayComponentProject}
         timeout={1000}
-        classNames="fade"
-        unmountOnExit
+        classNames="projects"
       >
         <ProjectsList />
       </CSSTransition>
       <CSSTransition
-        in={displayComponentProject}
+        in={!displayComponentProject}
         timeout={1000}
         classNames="collabs"
-        unmountOnExit
       >
         <ListCollabs />
       </CSSTransition>

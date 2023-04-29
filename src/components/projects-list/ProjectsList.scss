@@ -9,11 +9,28 @@
     transition: all 1s ease-in-out;
 
     &.projects-enter {
-        transform: translateX(0);
+        opacity: 0;
+    }
+
+    &.projects-enter-active {
+        opacity: 1;
+    }
+
+    &.projects-enter-done {
         opacity: 1;
     }
 
     &.projects-exit {
+        opacity: 1;
+    }
+
+    &.projects-exit-active {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    &.projects-exit-done {
+        position: absolute;
         transform: translateX(-100%);
         opacity: 0;
     }
