@@ -1,4 +1,3 @@
-import React from 'react'
 import SideMain from '../../components/side-main/SideMain'
 import Header from '../../components/header/Header'
 import './Project.scss'
@@ -46,7 +45,7 @@ export default function Project() {
             <div className='item comment'>Faire le backend en nodejs</div>
           </div>
           <div className='actions'>
-            <input type="text" placeholder="Écrivez quelque chose.." />
+            <input type="text" placeholder="Écrivez quelque chose..." />
             <button className='send-button'><i className="fa-regular fa-paper-plane"></i></button>
           </div>
         </div>

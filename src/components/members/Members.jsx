@@ -1,4 +1,3 @@
-import React from 'react'
 import './Members.scss'
 import ProfilePicture from '../../../public/assets/profile.webp'
 
