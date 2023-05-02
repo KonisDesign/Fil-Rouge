@@ -8,6 +8,13 @@
     background: #ffffff;
     padding: 14px 22px;
 
+    &.cursor {
+        cursor: pointer;
+    }
+    &.change-color {
+        background: rgb(142, 202, 51);
+    }
+
     @media screen and (max-width: 912px) {
         width: 90%;
     }

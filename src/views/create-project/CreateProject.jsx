@@ -6,6 +6,8 @@ import "./CreateProject.scss";
 
 export default function CreateProject() {
 
+  //const [selectedIds, setSelectedIds] = useState([]);
+
   const navigate = useNavigate()
 
   const [step, setStep] = useState(1);
@@ -77,8 +79,8 @@ export default function CreateProject() {
       <div className="column">
         <h1>Le projet a bien été crée</h1>
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-        <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
-        <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+        <circle className="path circle" fill="none" stroke="#73AF55" strokeWidth="6" strokeMiterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+        <polyline className="path check" fill="none" stroke="#73AF55" strokeWidth="6" strokeLinecap="round" strokeMiterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
       </svg>
       <button className="primary-button" onClick={() => navigate('/')}>Retourner à l'accueil</button>
       </div>
@@ -123,7 +125,7 @@ export default function CreateProject() {
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
       <div className="step">
-        <CollabsDetails infos={infos} />
+        <CollabsDetails infos={infos} canAddClass={true} /* selectedIds={selectedIds} setSelectedIds={setSelectedIds} *//>
       </div>
       <button type="submit" className="next-button" onClick={() => setStep(5)}>
         <i className="fa-solid fa-arrow-right-long"></i>
