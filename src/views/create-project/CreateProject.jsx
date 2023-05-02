@@ -1,9 +1,13 @@
 import { useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import CollabsDetails from "../../components/collabs-details/CollabsDetails";
 import "./CreateProject.scss";
 
 export default function CreateProject() {
+
+  const navigate = useNavigate()
+
   const [step, setStep] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
   const [task, setTask] = useState([]);
@@ -68,7 +72,18 @@ export default function CreateProject() {
     },
   ];
 
-  return step === 5 ? (
+  return step === 6 ? (
+    <div className="create-project">
+      <div className="column">
+        <h1>Le projet a bien été crée</h1>
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+        <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+        <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+      </svg>
+      <button className="primary-button" onClick={() => navigate('/')}>Retourner à l'accueil</button>
+      </div>
+    </div>
+  ) : step === 5 ? (
     <div className="create-project">
       <button type="submit" className="prev-button" onClick={() => setStep(4)}>
         <i className="fa-solid fa-arrow-left-long"></i>
@@ -98,7 +113,7 @@ export default function CreateProject() {
           ))}
         </div>
       </div>
-      <button type="submit" className="next-button" onClick={() => setStep(5)}>
+      <button type="submit" className="next-button" onClick={() => setStep(6)}>
         <i className="fa-solid fa-arrow-right-long"></i>
       </button>
     </div>
