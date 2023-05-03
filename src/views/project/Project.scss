@@ -28,8 +28,31 @@ $orangehover : #fcc143;
             height: auto;
 
             .title {
+                width: 100%;
                 font-size: 60px;
                 text-align: left;
+                background-color: transparent;
+                border: none;
+                outline: none;
+
+                &:focus {
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
+            }
+
+            .description {
+                width: 100%;
+                height: auto;
+                max-height: 300px;
+                text-align: left;
+                background-color: transparent;
+                border: none;
+                resize: none;
+                outline: none;
+
+                &:focus {
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
             }
         }
 
@@ -134,6 +157,7 @@ $orangehover : #fcc143;
                     padding: 8px 0px;
                     border: none;
                     border-bottom: 1px solid #636E75;
+                    outline: none;
                 }
 
                 .send-button {
@@ -144,6 +168,28 @@ $orangehover : #fcc143;
                     background-color: transparent;
                     color: #636E75;
                 }
+            }
+        }
+    }
+
+    .delete-project-div {
+        width: calc(96% - 300px);
+        margin-left: 300px;
+        margin-bottom: 75px;
+        justify-content: center;
+        display: flex;
+        justify-content: center;
+
+        .delete-project {
+            background: #ff2727;
+            color: #f1f1f1;
+            border: none;
+            border-radius: 20px;
+            padding: 18px 20px;
+            transition: background .3s ease-in-out;
+
+            &:hover {
+                background: #ff2727d2;
             }
         }
     }

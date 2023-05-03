@@ -3,16 +3,29 @@ import Header from '../../components/header/Header'
 import './Project.scss'
 
 export default function Project() {
+  const commentary = [
+    {
+      autor: "Camerlynck Romain",
+      content: "Wah mais c'est trop beau !"
+    },
+    {
+      autor: "Devos Julien",
+      content: "Ah mais c'est énorme !"
+    },
+    {
+      autor: "Kalilou",
+      content: " !"
+    }
+  ]
+
   return (
     <div className='project-container'>
       <Header />
       <SideMain />
       <div className='project-description'>
         <div className='infos'>
-          <h1 className='title'>Netflix</h1>
-          <p>Netflix est une entreprise multinationale américaine créée à Scotts
-            Valley en 1997 par Reed Hastings et Marc Randolph appartenant au secteur
-            d'activité des industries créatives.</p>
+          <input type='text' value="Netflix" className='title' />
+          <textarea className='description' autoComplete='off' spellCheck="false" rows="7">Netflix est une entreprise multinationale américaine créée à Scotts Valley en 1997 par Reed Hastings et Marc Randolph appartenant au secteur d'activité des industries créatives.</textarea>
         </div>
         <img src="/src/assets/projet1.png" alt="image du projet" />
       </div>
@@ -49,6 +62,9 @@ export default function Project() {
             <button className='send-button'><i className="fa-regular fa-paper-plane"></i></button>
           </div>
         </div>
+      </div>
+      <div className="delete-project-div">
+        <button className='delete-project'>Supprimer le projet Netflix</button>
       </div>
     </div>
   )
