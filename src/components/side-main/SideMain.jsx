@@ -22,7 +22,7 @@ export default function SideMain() {
                 </div>
             </div>
             <footer>
-                <p>&copy; Designed by Romain, Kalilou & Julien</p>
+                <p>&copy; Designed by Romain & Julien</p>
             </footer>
         </div>
     )

@@ -1,16 +1,8 @@
-import React from 'react'
 import './FormInputLogin.scss'
-import { useNavigate } from 'react-router-dom'
 
-export default function FormInputLogin({ component, title, divTop, divBottom, buttonText }) {
-
-    const navigate = useNavigate()
-
-    const handleclick = () => {
-        navigate('/')
-    }
+export default function FormInputLogin({handleRegister ,component, title, divTop, divBottom, buttonText }) {
     return (
-        <form className={`${component}-container`}>
+        <form onSubmit={handleRegister} className={`${component}-container`}>
             {title ? <h1>{title}</h1> : null}
             <div className="div-top">
                 {divTop}
@@ -19,7 +11,7 @@ export default function FormInputLogin({ component, title, divTop, divBottom, bu
                 {divBottom}
             </div>
             {buttonText ? (
-                <div onClick={() => handleclick()} className={`primary-button button-${component}`}>{buttonText}</div>
+                <button type='submit' className={`primary-button button-${component}`}>{buttonText}</button>
             ) : null}
         </form>
     )

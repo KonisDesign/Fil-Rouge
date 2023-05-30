@@ -60,13 +60,6 @@ export default function CreateProject() {
     },
     {
       imageUrl: "src/assets/profile.webp",
-      name: "Marong",
-      firstname: "Kalilou",
-      job: "Le meilleur développeur Javascript",
-      projects: ["Spotify", "Twitch", "Amazon"],
-    },
-    {
-      imageUrl: "src/assets/profile.webp",
       name: "Musk",
       firstname: "Elon",
       job: "Stagiaire en reconversion",

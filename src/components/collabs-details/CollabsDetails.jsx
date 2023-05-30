@@ -1,4 +1,5 @@
 import "./CollabsDetails.scss";
+import Picture from '../../assets/profile.webp'
 
 export default function CollabsDetails(props) {
 
@@ -11,37 +12,47 @@ export default function CollabsDetails(props) {
         }
       }
     } */
+console.log(props.data)
 
-  return (
+//parcourir data.projects, et à chaque virgule, on ajoute dans un tableau   ----    faire aussi le mdp
+
+if (!props.data) {
+  return null; // Retourner null ou un indicateur de chargement si les données ne sont pas encore disponibles
+}
+
+const dataArray = Object.values(props.data);
+  return dataArray ? (
     <>
-      {props.infos.map((info, index) => (
+      {dataArray.map((data, index) => (
         <div
-          key={info.name}
+          key={data.id}
           id={index}
           /* onClick={() => classChanged(index)} */
           className={`collab-details-container `} //${props.selectedIds.includes(index) ? 'change-color' : ''}
         >
           <div className="collab-picture">
-            <img src={info.imageUrl} alt="profile picture" />
+            <img src={Picture} alt="profile picture" />
           </div>
           <div className="infos">
             <div className="collab-status">
               <h2>
-                {info.name.toUpperCase()} {info.firstname}
+                {data.lastname.toUpperCase()} {data.firstname}
               </h2>
-              <h4>{info.job}</h4>
+              <h4>{data.job}</h4>
             </div>
             <div className="collab-projects">
               <h5>Travaille sur :</h5>
               <div className="collab-projects-list">
-                {info.projects.map((project) => (
-                  <h6 key={project}>{project}</h6>
-                ))}
+                {data.projects}
               </div>
             </div>
           </div>
         </div>
       ))}
     </>
-  );
+  )
+  :
+  (
+    <div>Impossible de recup</div>
+  )
 }

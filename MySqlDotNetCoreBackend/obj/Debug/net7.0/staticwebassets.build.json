@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Bcf9KQLa54NLeLiGgzMreqNP1ocRlG24JOWzOYcDAsU=",
+  "Source": "MySqlDotNetCoreBackend",
+  "BasePath": "_content/MySqlDotNetCoreBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
