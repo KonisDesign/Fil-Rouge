@@ -1,11 +1,16 @@
-import React from 'react'
+import jwtDecode from 'jwt-decode';
 import './SideMain.scss'
 
 export default function SideMain() {
+
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const firstName = decodedToken.unique_name;
+
     return (
         <div className='side-main'>
             <img className='profile-pic' src="/src/assets/profile.webp" alt='profile' />
-            <h2>Bonjour Michel</h2>
+            <h2>Bonjour {firstName}</h2>
             <div className='notifs-container'>
                 <h4>Dernières notifications</h4>
                 <div className='notif normal'>

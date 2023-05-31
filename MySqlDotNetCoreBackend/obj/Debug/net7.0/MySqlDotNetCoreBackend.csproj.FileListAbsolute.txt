@@ -60,3 +60,9 @@ C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\obj\De
 C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\obj\Debug\net7.0\MySqlDotNetCoreBackend.pdb
 C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\obj\Debug\net7.0\MySqlDotNetCoreBackend.genruntimeconfig.cache
 C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\obj\Debug\net7.0\ref\MySqlDotNetCoreBackend.dll
+C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\bin\Debug\net7.0\BCrypt.Net-Next.dll
+C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Administrateur\Documents\GitHub\Fil-Rouge\MySqlDotNetCoreBackend\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

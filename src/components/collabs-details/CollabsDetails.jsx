@@ -1,9 +1,9 @@
 import "./CollabsDetails.scss";
-import Picture from '../../assets/profile.webp'
+import Picture from "../../assets/profile.webp";
 
 export default function CollabsDetails(props) {
 
-    /* const classChanged = (id) => {
+  /* const classChanged = (id) => {
       if (props.canAddClass) {
         if (props.selectedIds.includes(id)) {
             props.setSelectedIds(props.selectedIds.filter(selectedId => selectedId !== id));
@@ -12,15 +12,13 @@ export default function CollabsDetails(props) {
         }
       }
     } */
-console.log(props.data)
 
-//parcourir data.projects, et à chaque virgule, on ajoute dans un tableau   ----    faire aussi le mdp
+  //parcourir data.projects, et à chaque virgule, on ajoute dans un tableau   ----    faire aussi le mdp
+  if (!props.data) {
+    return null; // Retourner null ou un indicateur de chargement si les données ne sont pas encore disponibles
+  }
 
-if (!props.data) {
-  return null; // Retourner null ou un indicateur de chargement si les données ne sont pas encore disponibles
-}
-
-const dataArray = Object.values(props.data);
+  const dataArray = Object.values(props.data);
   return dataArray ? (
     <>
       {dataArray.map((data, index) => (
@@ -43,16 +41,16 @@ const dataArray = Object.values(props.data);
             <div className="collab-projects">
               <h5>Travaille sur :</h5>
               <div className="collab-projects-list">
-                {data.projects}
+                {data.projects.split(",").map((project, projectIndex) => (
+                  <span key={projectIndex}>{project.trim()}</span>
+                ))}
               </div>
             </div>
           </div>
         </div>
       ))}
     </>
-  )
-  :
-  (
+  ) : (
     <div>Impossible de recup</div>
-  )
+  );
 }

@@ -1,26 +1,42 @@
 import SideMain from '../../components/side-main/SideMain'
 import Header from '../../components/header/Header'
 import './Project.scss'
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Project() {
-  const [title, setTitle] = useState("Netflix")
-  const [description, setDescription] = useState("Netflix est une entreprise multinationale américaine créée à Scotts Valley en 1997 par Reed Hastings et Marc Randolph appartenant au secteur d'activité des industries créatives.")
+
+  const { id } = useParams()
+  const navigate = useNavigate()
+
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
   const [selectedImage, setSelectedImage] = useState(null);
   const [getComment, setGetComment] = useState('');
-  const [comments, setComments] = useState([{
-    autor: "Camerlynck Romain",
-    content: "Wah mais c'est trop beau !"
-  },
-  {
-    autor: "Devos Julien",
-    content: "Ah mais c'est énorme !"
-  },
-  {
-    autor: "Marong Kalilou",
-    content: "On est trop fort à avoir fait ça !"
-  }]);
+  const [comments, setComments] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+
+
+  useEffect(() => {
+    fetch(`http://localhost:5129/Projects/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTitle(data.title);
+        setSelectedImage(data.url);
+        setDescription(data.description);
+        //setComments(Object.values(data.comments));
+        setTasks(data.tasks.split(","));
+        setNotifications(data.notifications.split(","));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+
+  
 
   const titleChanged = (e) => {
     document.querySelector(".update-button").style.display = "block"
@@ -75,6 +91,22 @@ export default function Project() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+        await fetch(`http://localhost:5129/Projects/${id}`, {
+            method: 'DELETE',
+        });
+        
+        navigate('/')
+
+        // Logic to handle successful delete.
+        // For example, you might want to redirect the user to a different page.
+    } catch (error) {
+        console.error('Failed to delete project:', error);
+    }
+}
+
+
   return (
     <div className='project-container'>
       <Header />
@@ -90,7 +122,7 @@ export default function Project() {
           <button className="image-button" onClick={() => chooseFile()}>
             {selectedImage ? (
               <img
-                src={URL.createObjectURL(selectedImage)}
+                src={selectedImage}
                 alt="image-project"
               />
             ) : (
@@ -110,21 +142,23 @@ export default function Project() {
       <div className='work-container'>
         <div className='work'>
           <h2>Tâches</h2>
-          <div className='item task'>Faire l'UML</div>
-          <div className='item task'>Faire Le frontend en react</div>
-          <div className='item task'>Faire le backend en nodejs</div>
+          {tasks.map((task, index) => (
+              <div key={index} className="item task">{task}</div>
+            )
+            )}
         </div>
         <div className='work'>
           <h2>Notification du projet</h2>
-          <div className='item notif'>Faire l'UML</div>
-          <div className='item notif'>Faire Le frontend en react</div>
-          <div className='item notif'>Faire le backend en nodejs</div>
+          {notifications.map((notification, index) => (
+              <div key={index} className="item notif">{notification}</div>
+            )
+            )}
         </div>
         <div className='work'>
           <h2>Commentaires</h2>
           <div className="comment-container">
-            {comments.map((comment) => (
-              <div key={comment.id} className="item comment">{comment.content}</div>
+            {comments.map((comment, index) => (
+              <div key={index} className="item comment">{comment.content}</div>
             )
             )}
           </div>
@@ -136,7 +170,7 @@ export default function Project() {
         </div>
       </div>
       <div className="delete-project-div">
-        <button className='delete-project'>Supprimer le projet Netflix</button>
+        <button onClick={() => handleDelete()} className='delete-project'>Supprimer le projet {title}</button>
       </div>
     </div>
   )

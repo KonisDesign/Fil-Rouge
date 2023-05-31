@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import jwtDecode from 'jwt-decode';
 import {CSSTransition} from "react-transition-group"
 import './Dashboard.scss'
 import SideMain from '../../components/side-main/SideMain'
@@ -14,11 +15,15 @@ export default function Dashboard() {
     setDisplayComponentProject(boolean);
   };
 
+  const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const role = decodedToken.role;
+
   return (
     <div className='dashboard'>
       <SideMain />
       <Header />
-      <CreateButton />
+      {role === "admin" ? <CreateButton/> : ''}
       <div className='tab-main'>
         <div className="tab-projects">
           <button className='tab-button' onClick={() => toggleComposant(true)}>Projets</button>

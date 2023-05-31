@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import CollabsDetails from "../../components/collabs-details/CollabsDetails";
@@ -13,12 +13,23 @@ export default function CreateProject() {
   const [step, setStep] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
   const [task, setTask] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [url, setUrl] = useState("https://www.grapheine.com/wp-content/uploads/2015/09/nouveau-logo-google-2015.jpg");
+  const [collabs, setCollabs] = useState([]);
 
   const addTask = (value) => {
     const newTask = [...task];
     newTask.unshift(value);
     setTask(newTask);
+    document.querySelector("#myinput").value = "";
   };
+
+  const deleteTask = (id) => {
+    const newTask = [...task];
+    newTask.splice(id, 1);
+    setTask(newTask);
+  }
 
   function handleKeyPress(event) {
     if (event.key === "Enter") {
@@ -43,29 +54,47 @@ export default function CreateProject() {
     }
   };
 
-  const infos = [
-    {
-      imageUrl: "src/assets/profile.webp",
-      name: "Devos",
-      firstname: "Julien",
-      job: "Développeur expert Front-End React",
-      projects: ["Netflix", "Spotify", "OVH"],
-    },
-    {
-      imageUrl: "src/assets/profile.webp",
-      name: "Camerlynck",
-      firstname: "Romain",
-      job: "Demi-Dieu développeur Front-End Vue.js",
-      projects: ["Youtube", "Twitch", "Google", "GPT-5"],
-    },
-    {
-      imageUrl: "src/assets/profile.webp",
-      name: "Musk",
-      firstname: "Elon",
-      job: "Stagiaire en reconversion",
-      projects: ["Machine à café", "Imprimante", "Porte-dossier"],
-    },
-  ];
+  const [datas, setData] = useState(null);
+  useEffect(() => {
+    fetch("http://localhost:5129/Users")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const postProject = async (event) => {
+    event.preventDefault();
+    
+      try {
+
+        const response = await fetch('http://localhost:5129/Projects', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            "Title": title,
+            "Description": description,
+            "Url" : url, 
+            "Tasks" : task.join(),
+            "Notifications" : "",
+            "Comments" : ""
+          })
+        });
+    
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    
+        navigate('/')
+      } catch (error) {
+        console.log('There was a problem with the fetch operation: ' + error.message);
+      }
+  }
 
   return step === 6 ? (
     <div className="create-project">
@@ -75,7 +104,7 @@ export default function CreateProject() {
         <circle className="path circle" fill="none" stroke="#73AF55" strokeWidth="6" strokeMiterlimit="10" cx="65.1" cy="65.1" r="62.1" />
         <polyline className="path check" fill="none" stroke="#73AF55" strokeWidth="6" strokeLinecap="round" strokeMiterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
       </svg>
-      <button className="primary-button" onClick={() => navigate('/')}>Retourner à l'accueil</button>
+      <button className="primary-button" onClick={(event) => postProject(event)}>Retourner à l'accueil</button>
       </div>
     </div>
   ) : step === 5 ? (
@@ -101,7 +130,7 @@ export default function CreateProject() {
           {task.map((item, index) => (
             <div key={index} className="item">
               <p>- {item}</p>
-              <button>
+              <button onClick={() => deleteTask(index)}>
                 <i className="fa-regular fa-trash-can"></i>
               </button>
             </div>
@@ -118,7 +147,7 @@ export default function CreateProject() {
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
       <div className="step">
-        <CollabsDetails infos={infos} canAddClass={true} /* selectedIds={selectedIds} setSelectedIds={setSelectedIds} *//>
+        <CollabsDetails data={datas} canAddClass={true} /* selectedIds={selectedIds} setSelectedIds={setSelectedIds} *//>
       </div>
       <button type="submit" className="next-button" onClick={() => setStep(5)}>
         <i className="fa-solid fa-arrow-right-long"></i>
@@ -153,7 +182,7 @@ export default function CreateProject() {
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
       <div className="step">
-        <textarea placeholder="Description" required />
+        <textarea placeholder="Description" required  onChange={(e) => setDescription(e.target.value)}/>
       </div>
       <button type="submit" className="next-button" onClick={() => setStep(3)}>
         <i className="fa-solid fa-arrow-right-long"></i>
@@ -162,7 +191,7 @@ export default function CreateProject() {
   ) : (
     <div className="create-project">
       <div className="step">
-        <input type="text" placeholder="Titre" required />
+        <input type="text" placeholder="Titre" required onChange={(e) => setTitle(e.target.value)}/>
         <span></span>
       </div>
       <button type="submit" className="next-button" onClick={() => setStep(2)}>

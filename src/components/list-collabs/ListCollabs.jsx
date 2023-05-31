@@ -12,12 +12,8 @@ export default function ListCollabs() {
       })
       .catch((error) => {
         console.log(error);
-        // Gérez les erreurs ici
       });
   }, []);
-  useEffect(() => {
-    console.log(datas)
-  }, [datas]);
   return (
     <div className={`collabs-container`}>
       <CollabsDetails data={datas}></CollabsDetails>

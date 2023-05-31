@@ -4,6 +4,7 @@ import Dashboard from './views/dashboard/Dashboard'
 import Form from './views/form/Form'
 import Project from './views/project/Project'
 import CreateProject from './views/create-project/CreateProject'
+import ProtectedRoute from './ProtectedRoute'
 
 function App() {
 
@@ -11,11 +12,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Dashboard />} />
+          <Route path='/' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path='/login' element={<Form />} />
           <Route path='/register' element={<Form />} />
-          <Route path='/project/:id' element={<Project />} />
-          <Route path='/new' element={<CreateProject />} />
+          <Route path='/project/:id' element={<ProtectedRoute><Project /></ProtectedRoute>} />
+          <Route path='/new' element={<ProtectedRoute><CreateProject /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </>

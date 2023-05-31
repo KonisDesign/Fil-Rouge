@@ -5,7 +5,6 @@ export default function CreateButton() {
   const navigate = useNavigate();
 
   const handleclick = () => {
-    localStorage.clear();
     navigate("/new");
   };
 

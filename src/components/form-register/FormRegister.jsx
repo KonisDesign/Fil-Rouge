@@ -3,8 +3,10 @@ import { useDropzone } from "react-dropzone";
 import "./FormRegister.scss";
 import ProfilePicture from "/src/assets/profile.webp";
 import FormInputLogin from "../form-input-login/FormInputLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function FormRegister() {
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -40,22 +42,23 @@ export default function FormRegister() {
       'input[name="password-input"]'
     ).value;
 
-    // Création d'un objet FormData pour gérer l'image et les autres données
     let formData = new FormData();
     formData.append("Lastname", Lastname);
     formData.append("Firstname", Firstname);
     formData.append("Email", Email);
     formData.append("Password", Password);
+    formData.append("Job", "");
+    formData.append("Projects", "");
+    formData.append("Role", "user");
 
     try {
-      // Envoi des données au backend
       let object = {};
       formData.forEach((value, key) => {
         object[key] = value;
       });
       let json = JSON.stringify(object);
 
-      const response = await fetch("http://localhost:5129/Users", {
+      const response = await fetch("http://localhost:5129/Users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,9 +70,7 @@ export default function FormRegister() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const user = await response.json();
-
-      console.log(user);
+      navigate('/')
     } catch (error) {
       console.log(
         "There was a problem with the fetch operation: " + error.message

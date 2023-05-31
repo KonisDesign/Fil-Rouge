@@ -14,6 +14,8 @@ namespace MySqlDotNetCoreBackend
         {
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Project> Projects { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
