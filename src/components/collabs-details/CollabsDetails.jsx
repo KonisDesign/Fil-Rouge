@@ -1,8 +1,19 @@
 import "./CollabsDetails.scss";
+import { useState, useEffect } from "react";
 import Picture from "../../assets/profile.webp";
 
 export default function CollabsDetails(props) {
-
+  const [datas, setData] = useState(null);
+  useEffect(() => {
+    fetch("http://localhost:5129/Projects")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(Object.values(data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   /* const classChanged = (id) => {
       if (props.canAddClass) {
         if (props.selectedIds.includes(id)) {
@@ -14,7 +25,7 @@ export default function CollabsDetails(props) {
     } */
 
   //parcourir data.projects, et à chaque virgule, on ajoute dans un tableau   ----    faire aussi le mdp
-  if (!props.data) {
+  if (!props.data || !datas) {
     return null; // Retourner null ou un indicateur de chargement si les données ne sont pas encore disponibles
   }
 
@@ -41,9 +52,14 @@ export default function CollabsDetails(props) {
             <div className="collab-projects">
               <h5>Travaille sur :</h5>
               <div className="collab-projects-list">
-                {data.projects.split(",").map((project, projectIndex) => (
-                  <span key={projectIndex}>{project.trim()}</span>
-                ))}
+                {data.projects.split(",").map((project, projectIndex) => {
+                  return datas.map((item) => {
+                    if (item.id === Number(project.trim())) {
+                      return <span key={projectIndex}>{item.title}</span>;
+                    }
+                    return null;
+                  });
+                })}
               </div>
             </div>
           </div>

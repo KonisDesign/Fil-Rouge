@@ -9,6 +9,20 @@ $grey : #636E75;
     align-items: center;
     gap: 8%;
     position: relative;
+
+    .svg-cross {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      font-size: 3rem;
+      color: red;
+      cursor: pointer;
+      transition: color .3s ease-in-out;
+
+      &:hover {
+        color: rgb(241, 138, 138);
+      }
+    }
     
     .step {
         width: 30%;

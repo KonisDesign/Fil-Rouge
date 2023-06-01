@@ -34,7 +34,8 @@ export default function Form() {
             "Password" : password,
             "Job" : "",
             "Projects" : "",
-            "Role": ""
+            "Role": "",
+            "Url": ""
           })
         });
     
@@ -61,7 +62,7 @@ export default function Form() {
         title="Se connecter"
         divTop={
           <div className="email-login">
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="true" name="email" />
             <label className='login-label'>Adresse Email</label>
           </div>
         }

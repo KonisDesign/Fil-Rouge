@@ -94,6 +94,15 @@ $orangehover : #fcc143;
                         opacity: 0.6;
                     }
                 }
+
+                .non-opacity {
+                    opacity: 1;
+                    cursor: initial;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
             }
         }
     }

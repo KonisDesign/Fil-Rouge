@@ -98,6 +98,7 @@ export default function CreateProject() {
 
   return step === 6 ? (
     <div className="create-project">
+      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
       <div className="column">
         <h1>Le projet a bien été crée</h1>
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
@@ -109,6 +110,7 @@ export default function CreateProject() {
     </div>
   ) : step === 5 ? (
     <div className="create-project">
+      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
       <button type="submit" className="prev-button" onClick={() => setStep(4)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
@@ -143,6 +145,7 @@ export default function CreateProject() {
     </div>
   ) : step === 4 ? (
     <div className="create-project">
+      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
       <button type="submit" className="prev-button" onClick={() => setStep(3)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
@@ -155,6 +158,7 @@ export default function CreateProject() {
     </div>
   ) : step === 3 ? (
     <div className="create-project">
+      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
       <button type="submit" className="prev-button" onClick={() => setStep(2)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
@@ -178,6 +182,7 @@ export default function CreateProject() {
     </div>
   ) : step === 2 ? (
     <div className="create-project">
+      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
       <button type="submit" className="prev-button" onClick={() => setStep(1)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
@@ -190,6 +195,7 @@ export default function CreateProject() {
     </div>
   ) : (
     <div className="create-project">
+      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
       <div className="step">
         <input type="text" placeholder="Titre" required onChange={(e) => setTitle(e.target.value)}/>
         <span></span>

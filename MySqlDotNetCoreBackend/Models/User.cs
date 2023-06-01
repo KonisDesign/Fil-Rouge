@@ -4,7 +4,7 @@ namespace MySqlDotNetCoreBackend.Models
 {
     public class User
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "L'adresse email est requise.")]
         public string Email { get; set; }
@@ -20,5 +20,6 @@ namespace MySqlDotNetCoreBackend.Models
 
         public string Projects { get; set; } = null;
         public string Role { get; set; } = "user";
+        public string Url { get; set; } = "profile.webp";
     }
 }

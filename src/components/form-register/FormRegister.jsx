@@ -50,6 +50,7 @@ export default function FormRegister() {
     formData.append("Job", "");
     formData.append("Projects", "");
     formData.append("Role", "user");
+    formData.append("Url", "profile.webp");
 
     try {
       let object = {};

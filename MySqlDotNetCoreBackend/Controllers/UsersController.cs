@@ -67,42 +67,40 @@ namespace MySqlDotNetCoreBackend.Controllers
         }
 
         [HttpPost("login")]
-public ActionResult<User> Login(User user)
-{
-    try
-    {
-        var foundUser = _context.Users.SingleOrDefault(x => x.Email == user.Email);
-
-        if (foundUser == null || !BCrypt.Net.BCrypt.Verify(user.Password, foundUser.Password))
+        public ActionResult<User> Login(User user)
         {
-            return Unauthorized();
-        }
-
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["JwtConfig:JwtKey"]);  
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new Claim[]
+            try
             {
-                new Claim(ClaimTypes.Name, foundUser.Firstname), // use the found user's name instead
-                new Claim(ClaimTypes.Email, foundUser.Email), // include the email as wel
-                new Claim(ClaimTypes.Role, foundUser.Role)
-            }),
-            Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
+                var foundUser = _context.Users.SingleOrDefault(x => x.Email == user.Email);
 
-        return Ok(new
-        {
-            token = tokenHandler.WriteToken(token)
-        });
-    }
-    catch (Exception ex)
-    {
-        return BadRequest(ex.Message);
-    }
-}
+                if (foundUser == null || !BCrypt.Net.BCrypt.Verify(user.Password, foundUser.Password))
+                {
+                    return Unauthorized();
+                }
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_configuration["JwtConfig:JwtKey"]);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                new Claim("Id", foundUser.Id.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddHours(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+
+                return Ok(new
+                {
+                    token = tokenHandler.WriteToken(token)
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 
