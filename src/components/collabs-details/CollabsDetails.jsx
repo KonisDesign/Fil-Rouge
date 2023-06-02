@@ -1,6 +1,5 @@
 import "./CollabsDetails.scss";
 import { useState, useEffect } from "react";
-import Picture from "../../assets/profile.webp";
 
 export default function CollabsDetails(props) {
   const [datas, setData] = useState(null);
@@ -40,7 +39,7 @@ export default function CollabsDetails(props) {
           className={`collab-details-container `} //${props.selectedIds.includes(index) ? 'change-color' : ''}
         >
           <div className="collab-picture">
-            <img src={Picture} alt="profile picture" />
+            <img src={"../../../MySqlDotNetCoreBackend/public/" + data.url} alt="profile picture" />
           </div>
           <div className="infos">
             <div className="collab-status">

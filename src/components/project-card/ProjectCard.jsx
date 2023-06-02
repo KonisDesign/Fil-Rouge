@@ -30,7 +30,7 @@ export default function ProjectCard(props) {
 
   return (
     <div className="project-card" onClick={() => handleClick()}>
-      <img className="project-image" src={props.url} />
+      <img className="project-image" src={"../../../MySqlDotNetCoreBackend/public/" + props.url} />
       <h3>{props.title}</h3>
       <p>{props.description}</p>
       <div className="row">
@@ -40,7 +40,7 @@ export default function ProjectCard(props) {
               return (
                 <img
                   key={userIndex}
-                  src={"/src/assets/" + user.url}
+                  src={"../../../MySqlDotNetCoreBackend/public/" + user.url}
                   alt={user.firstname}
                 />
               );

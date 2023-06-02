@@ -5,17 +5,16 @@ import CollabsDetails from "../../components/collabs-details/CollabsDetails";
 import "./CreateProject.scss";
 
 export default function CreateProject() {
-
   //const [selectedIds, setSelectedIds] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
   const [task, setTask] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [url, setUrl] = useState("https://www.grapheine.com/wp-content/uploads/2015/09/nouveau-logo-google-2015.jpg");
+  const [url, setUrl] = useState("");
   const [collabs, setCollabs] = useState([]);
 
   const addTask = (value) => {
@@ -29,7 +28,7 @@ export default function CreateProject() {
     const newTask = [...task];
     newTask.splice(id, 1);
     setTask(newTask);
-  }
+  };
 
   function handleKeyPress(event) {
     if (event.key === "Enter") {
@@ -41,6 +40,7 @@ export default function CreateProject() {
 
   const onDrop = useCallback((acceptedFiles) => {
     setSelectedImage(acceptedFiles[0]);
+    setUrl(acceptedFiles[0].name)
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -68,49 +68,98 @@ export default function CreateProject() {
 
   const postProject = async (event) => {
     event.preventDefault();
-    
-      try {
 
-        const response = await fetch('http://localhost:5129/Projects', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            "Title": title,
-            "Description": description,
-            "Url" : url, 
-            "Tasks" : task.join(),
-            "Notifications" : "",
-            "Comments" : ""
-          })
+    try {
+      const response = await fetch("http://localhost:5129/Projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Title: title,
+          Description: description,
+          Url: url,
+          Tasks: task.join(),
+          Notifications: "",
+          Comments: "",
+        }),
+      });
+
+      const formData = new FormData();
+      formData.append("file", selectedImage);
+
+      fetch("http://localhost:5129/upload", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          console.log("Réponse du serveur :", response);
+          // Gérer la réponse du serveur
+        })
+        .catch((error) => {
+          console.log("Erreur lors de la requête :", error);
+          // Gérer les erreurs
         });
-    
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-    
-        navigate('/')
-      } catch (error) {
-        console.log('There was a problem with the fetch operation: ' + error.message);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-  }
+
+      navigate("/");
+    } catch (error) {
+      console.log(
+        "There was a problem with the fetch operation: " + error.message
+      );
+    }
+  };
 
   return step === 6 ? (
     <div className="create-project">
-      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
+      <i
+        onClick={() => navigate("/")}
+        className="svg-cross fa-regular fa-circle-xmark"
+      ></i>
       <div className="column">
         <h1>Le projet a bien été crée</h1>
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-        <circle className="path circle" fill="none" stroke="#73AF55" strokeWidth="6" strokeMiterlimit="10" cx="65.1" cy="65.1" r="62.1" />
-        <polyline className="path check" fill="none" stroke="#73AF55" strokeWidth="6" strokeLinecap="round" strokeMiterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
-      </svg>
-      <button className="primary-button" onClick={(event) => postProject(event)}>Retourner à l'accueil</button>
+        <svg
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 130.2 130.2"
+        >
+          <circle
+            className="path circle"
+            fill="none"
+            stroke="#73AF55"
+            strokeWidth="6"
+            strokeMiterlimit="10"
+            cx="65.1"
+            cy="65.1"
+            r="62.1"
+          />
+          <polyline
+            className="path check"
+            fill="none"
+            stroke="#73AF55"
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            points="100.2,40.2 51.5,88.8 29.8,67.5 "
+          />
+        </svg>
+        <button
+          className="primary-button"
+          onClick={(event) => postProject(event)}
+        >
+          Retourner à l'accueil
+        </button>
       </div>
     </div>
   ) : step === 5 ? (
     <div className="create-project">
-      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
+      <i
+        onClick={() => navigate("/")}
+        className="svg-cross fa-regular fa-circle-xmark"
+      ></i>
       <button type="submit" className="prev-button" onClick={() => setStep(4)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
@@ -145,12 +194,20 @@ export default function CreateProject() {
     </div>
   ) : step === 4 ? (
     <div className="create-project">
-      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
+      <i
+        onClick={() => navigate("/")}
+        className="svg-cross fa-regular fa-circle-xmark"
+      ></i>
       <button type="submit" className="prev-button" onClick={() => setStep(3)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
       <div className="step">
-        <CollabsDetails data={datas} canAddClass={true} /* selectedIds={selectedIds} setSelectedIds={setSelectedIds} *//>
+        <CollabsDetails
+          data={datas}
+          canAddClass={
+            true
+          } /* selectedIds={selectedIds} setSelectedIds={setSelectedIds} */
+        />
       </div>
       <button type="submit" className="next-button" onClick={() => setStep(5)}>
         <i className="fa-solid fa-arrow-right-long"></i>
@@ -158,7 +215,10 @@ export default function CreateProject() {
     </div>
   ) : step === 3 ? (
     <div className="create-project">
-      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
+      <i
+        onClick={() => navigate("/")}
+        className="svg-cross fa-regular fa-circle-xmark"
+      ></i>
       <button type="submit" className="prev-button" onClick={() => setStep(2)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
@@ -182,12 +242,19 @@ export default function CreateProject() {
     </div>
   ) : step === 2 ? (
     <div className="create-project">
-      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
+      <i
+        onClick={() => navigate("/")}
+        className="svg-cross fa-regular fa-circle-xmark"
+      ></i>
       <button type="submit" className="prev-button" onClick={() => setStep(1)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
       <div className="step">
-        <textarea placeholder="Description" required  onChange={(e) => setDescription(e.target.value)}/>
+        <textarea
+          placeholder="Description"
+          required
+          onChange={(e) => setDescription(e.target.value)}
+        />
       </div>
       <button type="submit" className="next-button" onClick={() => setStep(3)}>
         <i className="fa-solid fa-arrow-right-long"></i>
@@ -195,9 +262,17 @@ export default function CreateProject() {
     </div>
   ) : (
     <div className="create-project">
-      <i onClick={() => navigate("/")} className="svg-cross fa-regular fa-circle-xmark"></i>
+      <i
+        onClick={() => navigate("/")}
+        className="svg-cross fa-regular fa-circle-xmark"
+      ></i>
       <div className="step">
-        <input type="text" placeholder="Titre" required onChange={(e) => setTitle(e.target.value)}/>
+        <input
+          type="text"
+          placeholder="Titre"
+          required
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <span></span>
       </div>
       <button type="submit" className="next-button" onClick={() => setStep(2)}>

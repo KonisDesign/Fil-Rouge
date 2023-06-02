@@ -1,9 +1,9 @@
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import "./FormRegister.scss";
-import ProfilePicture from "/src/assets/profile.webp";
 import FormInputLogin from "../form-input-login/FormInputLogin";
 import { useNavigate } from "react-router-dom";
+import ProfilePic from '../../../MySqlDotNetCoreBackend/public/profile.webp'
 
 export default function FormRegister() {
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ export default function FormRegister() {
 
   const onDrop = useCallback((acceptedFiles) => {
     setSelectedImage(acceptedFiles[0]);
+    console.log(acceptedFiles[0].name)
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -42,6 +43,8 @@ export default function FormRegister() {
       'input[name="password-input"]'
     ).value;
 
+    handleUpload();
+
     let formData = new FormData();
     formData.append("Lastname", Lastname);
     formData.append("Firstname", Firstname);
@@ -50,7 +53,7 @@ export default function FormRegister() {
     formData.append("Job", "");
     formData.append("Projects", "");
     formData.append("Role", "user");
-    formData.append("Url", "profile.webp");
+    formData.append("Url", selectedImage.name);
 
     try {
       let object = {};
@@ -79,6 +82,24 @@ export default function FormRegister() {
     }
   };
 
+  const handleUpload = () => {
+    const formData = new FormData();
+    formData.append('file', selectedImage);
+
+    fetch('http://localhost:5129/upload', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      console.log('Réponse du serveur :', response);
+      // Gérer la réponse du serveur
+    })
+    .catch(error => {
+      console.log('Erreur lors de la requête :', error);
+      // Gérer les erreurs
+    });
+  };
+
   return (
     <FormInputLogin
       handleRegister={handleRegister}
@@ -104,7 +125,7 @@ export default function FormRegister() {
                 alt="profile picture"
               />
             ) : (
-              <img src={ProfilePicture} alt="profile picture" />
+              <img src={ProfilePic} alt="profile picture" />
             )}
           </div>
           <div className="register-top-right">

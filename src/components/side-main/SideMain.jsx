@@ -2,7 +2,6 @@ import jwtDecode from "jwt-decode";
 import "./SideMain.scss";
 import { useEffect, useState } from "react";
 
-
 export default function SideMain() {
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode(token);
@@ -25,7 +24,7 @@ export default function SideMain() {
     <div className="side-main">
       <img
         className="profile-pic"
-        src={"/src/assets/" + user.url}
+        src={"../../../MySqlDotNetCoreBackend/public/" + user.url}
         alt="profile"
       />
       <h2>Bonjour {user.firstname}</h2>

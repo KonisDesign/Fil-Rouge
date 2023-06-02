@@ -9,12 +9,13 @@ export default function Register() {
 
   const toggleDisplay = () => {
     setDisplay(!display);
+    console.log(display)
   }
   return (
     <div id="large-header" className="large-header">
       <ParticlesBackground />
       <div className="button-switch" onClick={toggleDisplay}>
-        {toggleDisplay ? 'S\'inscrire' : 'Se connecter'}
+        {display ? 'Se connecter' : 'S\'inscrire'}
         <div className="switch-arrow">
           <i className="fa-solid fa-arrow-right"></i>
           <i className="fa-solid fa-arrow-left"></i>

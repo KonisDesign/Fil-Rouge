@@ -27,11 +27,12 @@ namespace MySqlDotNetCoreBackend
 
             services.AddControllers();
             services.AddDbContext<UserContext>();
+            services.AddScoped<IFileService, FileService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("AllowMyOrigin");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -40,6 +41,7 @@ namespace MySqlDotNetCoreBackend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("AllowMyOrigin");
 
             app.UseAuthorization();
 

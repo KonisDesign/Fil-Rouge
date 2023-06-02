@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 import "./ProjectsList.scss";
 import ProjectCard from "../project-card/ProjectCard";
 
-export default function ProjectsList() {
+export default function ProjectsList(props) {
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.Id;
@@ -38,7 +38,7 @@ export default function ProjectsList() {
     }
   }, [isFirstEffectDone]);
 
-  if (!datas && !user) {
+  if (!datas && !props.user) {
     return null; // Retourner null ou un indicateur de chargement si les données ne sont pas encore disponibles
   }
 

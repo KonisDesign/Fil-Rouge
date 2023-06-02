@@ -17,11 +17,13 @@ export default function Project() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUpload, setImageUpload] = useState(null);
   const [getComment, setGetComment] = useState("");
   const [comments, setComments] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [getTasks, setGetTasks] = useState("");
   const [notifications, setNotifications] = useState([]);
+  const [collabs, setCollabs] = useState([]);
 
   const [isFirstEffectDone, setIsFirstEffectDone] = useState(false);
 
@@ -106,17 +108,24 @@ export default function Project() {
     setDescription(e.target.value);
   };
 
-  const saveProject = () => {
-    document.querySelector(".update-button").style.display = "none";
-    console.log(title);
-    console.log(description);
-  };
-
   const imageProjectButton = useRef(null);
 
+  const updateRef = useRef();
+
   const onDrop = useCallback((acceptedFiles) => {
-    setSelectedImage(acceptedFiles[0]);
+    console.log(acceptedFiles[0]);
+    setImageUpload(acceptedFiles[0]);
+    setSelectedImage(acceptedFiles[0].name);
+    updateRef.current.click();
+
+    //document.querySelector(".update-button").style.display = "block";
   }, []);
+
+  useEffect(() => {
+    if (imageUpload) {
+      updateRef.current.click();
+    }
+  }, [imageUpload]);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -150,7 +159,6 @@ export default function Project() {
     }
   };
 
-
   const addTask = () => {
     if (getTasks.trim()) {
       const newTask = [...tasks];
@@ -169,6 +177,76 @@ export default function Project() {
     }
   };
 
+  const [displayComponent, setDisplayComponent] = useState(false);
+  const displayCollabs = () => {
+    setDisplayComponent(!displayComponent);
+  };
+
+  const addCollabs = async (event, user) => {
+    event.preventDefault();
+
+    let bool = false;
+    if (collabs.includes(user)) {
+      console.log("oui");
+      const newCollabs = [...collabs];
+      const index = newCollabs.indexOf(user);
+      newCollabs.splice(index, 1);
+      setCollabs(newCollabs);
+      bool = true;
+    } else {
+      const newCollabs = [...collabs, user];
+      setCollabs(newCollabs);
+      console.log(newCollabs);
+    }
+
+    let formData = new FormData();
+    datas.forEach((u) => {
+      if (u.id === user) {
+        formData.append("Id", u.id);
+        formData.append("Lastname", u.lastname);
+        formData.append("Firstname", u.firstname);
+        formData.append("Email", u.email);
+        formData.append("Password", u.password);
+        formData.append("Job", u.job);
+        const projects = u.projects.split(",");
+        const projectIndex = projects.indexOf(id);
+        if (projectIndex !== -1) {
+          projects.splice(projectIndex, 1);
+          formData.append("Projects", projects.join(","));
+        } else {
+          formData.append("Projects", u.projects + "," + id);
+        }
+        formData.append("Role", u.role);
+        formData.append("Url", u.url);
+      }
+    });
+
+    try {
+      let object = {};
+      formData.forEach((value, key) => {
+        object[key] = value;
+      });
+      let json = JSON.stringify(object);
+
+      const response = await fetch(`http://localhost:5129/Users/${user}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: json,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      location.reload();
+    } catch (error) {
+      console.log(
+        "There was a problem with the fetch operation: " + error.message
+      );
+    }
+  };
+
   const handleDelete = async () => {
     try {
       await fetch(`http://localhost:5129/Projects/${id}`, {
@@ -181,12 +259,94 @@ export default function Project() {
     }
   };
 
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    // Récupération des valeurs des champs de formulaire
+    const Title = document.querySelector('input[name="title-input"]').value;
+    const Description = document.querySelector(
+      'textarea[name="description-input"]'
+    ).value;
+
+    handleUpload();
+
+    // Maintenant, nous utilisons les valeurs que nous venons de récupérer plutôt que des valeurs codées en dur.
+    let formData = new FormData();
+    formData.append("Id", id);
+    formData.append("Title", Title);
+    formData.append("Description", Description);
+    formData.append("Url", selectedImage);
+    formData.append("Tasks", tasks.join(","));
+    formData.append("Notifications", notifications.join(","));
+    formData.append("Comments", "test"); // Les commentaires sont un tableau d'objets, nous devons donc le convertir en chaîne avant de l'ajouter.
+
+    // Je n'ai pas changé ceci parce que vous avez dit de ne pas toucher au FormData.
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + typeof pair[1] + " " + pair[1]);
+    }
+
+    let object = {};
+    formData.forEach((value, key) => {
+      // Ici, je m'assure que la première lettre de chaque clé est en majuscule
+      let upperCaseKey = key.charAt(0).toUpperCase() + key.slice(1);
+      object[upperCaseKey] = value;
+    });
+    console.log(id, object, JSON.stringify(object));
+
+    try {
+      const response = await fetch(`http://localhost:5129/Projects/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(object), // Nous envoyons l'objet converti en JSON
+      });
+
+      if (!response.ok) {
+        const message = await response.text();
+        console.log(message);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error(
+        "There was a problem with the fetch operation: ",
+        error.message,
+        "Stack Trace: ",
+        error.stack
+      );
+    }
+
+    document.querySelector(".update-button").style.display = "none";
+    location.reload();
+  };
+
+  const handleUpload = () => {
+    const formData = new FormData();
+    formData.append("file", imageUpload);
+
+    fetch("http://localhost:5129/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        console.log("Réponse du serveur :", response);
+        // Gérer la réponse du serveur
+      })
+      .catch((error) => {
+        console.log("Erreur lors de la requête :", error);
+        // Gérer les erreurs
+      });
+  };
+
   return datas ? (
     <div className="project-container">
       <Header />
       <SideMain />
       {admin ? (
-        <button className="update-button" onClick={() => saveProject()}>
+        <button
+          ref={updateRef}
+          className="update-button"
+          onClick={(event) => handleUpdate(event)}
+        >
           Mettre à jour
         </button>
       ) : null}
@@ -194,12 +354,14 @@ export default function Project() {
         <div className="infos">
           <input
             type="text"
+            name="title-input"
             value={title}
             className="title"
             onChange={(e) => titleChanged(e)}
             disabled={!admin}
           />
           <textarea
+            name="description-input"
             defaultValue={description}
             className="description"
             autoComplete="off"
@@ -209,47 +371,90 @@ export default function Project() {
             disabled={!admin}
           />
         </div>
-        {admin ? <div className="image-container" {...getRootProps()}>
-          <input type="file" ref={imageProjectButton} {...getInputProps()} />
-          <button
-            className="image-button"
-            onClick={() => chooseFile()}
-            disabled={!admin}
-          >
-            {selectedImage ? (
-              <img src={selectedImage} alt="image-project" />
-            ) : (
-              <img src="/src/assets/projet1.png" alt="image du projet" />
-            )}
-          </button>
-        </div> 
-        : 
-        <div className="image-container">
-          <button
-            className="image-button"
-            onClick={() => chooseFile()}
-            disabled={!admin}
-          >
-            {selectedImage ? (
-              <img className="non-opacity" src={selectedImage} alt="image-project" />
-            ) : (
-              <img className="non-opacity" src="/src/assets/projet1.png" alt="image du projet" />
-            )}
-          </button>
-        </div>}
+        {admin ? (
+          <div className="image-container" {...getRootProps()}>
+            <input type="file" ref={imageProjectButton} {...getInputProps()} />
+            <button
+              className="image-button"
+              onClick={() => chooseFile()}
+              disabled={!admin}
+            >
+              {selectedImage ? (
+                <img
+                  src={
+                    "../../../MySqlDotNetCoreBackend/public/" + selectedImage
+                  }
+                  alt="image-project"
+                />
+              ) : (
+                <img src="/src/assets/projet1.png" alt="image du projet" />
+              )}
+            </button>
+          </div>
+        ) : (
+          <div className="image-container">
+            <button
+              className="image-button"
+              onClick={() => chooseFile()}
+              disabled={!admin}
+            >
+              {selectedImage ? (
+                <img
+                  className="non-opacity"
+                  src={
+                    "../../../MySqlDotNetCoreBackend/public/" + selectedImage
+                  }
+                  alt="image-project"
+                />
+              ) : (
+                <img
+                  className="non-opacity"
+                  src="/src/assets/projet1.png"
+                  alt="image du projet"
+                />
+              )}
+            </button>
+          </div>
+        )}
       </div>
       <div className="members-container">
         {!admin ? null : (
-          <img src="/src/assets/add.png" alt="photo de profil d'un membre" />
+          <>
+            {displayComponent
+              ? datas.map((user) => {
+                  if (user.projects.split(",").includes(id)) {
+                    return null;
+                  } else {
+                    return (
+                      <img
+                        key={user.id}
+                        src={
+                          "../../../MySqlDotNetCoreBackend/public/" + user.url
+                        }
+                        style={{ filter: "grayscale(90%)" }}
+                        onClick={(event) => addCollabs(event, user.id)}
+                      />
+                    );
+                  }
+                })
+              : null}
+            <img
+              onClick={() => displayCollabs()}
+              src="/src/assets/add.png"
+              alt="photo de profil d'un membre"
+            />
+          </>
         )}
-        {datas.map((user, userIndex) => {
+
+        {datas.map((user) => {
           return user.projects.split(",").map((project) => {
             if (project == id) {
               return (
                 <img
-                  key={userIndex}
-                  src={"/src/assets/" + user.url}
+                  key={user.id}
+                  src={"../../../MySqlDotNetCoreBackend/public/" + user.url}
                   alt={user.firstname}
+                  onClick={admin ? (event) => addCollabs(event, user.id) : null}
                 />
               );
             }
