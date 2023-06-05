@@ -20,6 +20,8 @@ export default function Form() {
 
     const handleLogin = async (event) => {
       event.preventDefault();
+      localStorage.setItem('pass', password)
+      console.log(password)
     
       try {
         const response = await fetch('http://localhost:5129/Users/login', {
@@ -62,14 +64,14 @@ export default function Form() {
         title="Se connecter"
         divTop={
           <div className="email-login">
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="true" name="email" />
-            <label className='login-label'>Adresse Email</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="true" name="email"/>
+            <label className='login-label' style={email != "" ? {top:'10px',left:'5px',fontSize:'14px'}: null}>Adresse Email</label>
           </div>
         }
         divBottom={
           <div className="password-login">
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-            <label className='login-label'>Mot de passe</label>
+            <label className='login-label' style={password != "" ? {top:'10px',left:'5px',fontSize:'14px'}: null}>Mot de passe</label>
           </div>
         }
         buttonText="Connexion"

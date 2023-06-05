@@ -1,12 +1,14 @@
 .projects-container {
-    width: calc(100% - 300px);
+    width: calc(100% - 340px);
     height: auto;
     margin-left: 300px;
     padding-bottom: 30px;
+    padding: 0px 20px 30px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     flex-wrap: wrap;
     transition: all 1s ease-in-out;
+    gap: 5%;
 
     &.projects-enter {
         opacity: 0;

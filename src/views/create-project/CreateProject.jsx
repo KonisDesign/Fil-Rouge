@@ -12,8 +12,8 @@ export default function CreateProject() {
   const [step, setStep] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
   const [task, setTask] = useState([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
   const [url, setUrl] = useState("");
   const [collabs, setCollabs] = useState([]);
 
@@ -113,7 +113,7 @@ export default function CreateProject() {
     }
   };
 
-  return step === 6 ? (
+  return step === 5 ? (
     <div className="create-project">
       <i
         onClick={() => navigate("/")}
@@ -154,13 +154,13 @@ export default function CreateProject() {
         </button>
       </div>
     </div>
-  ) : step === 5 ? (
+  ) : step === 4 ? (
     <div className="create-project">
       <i
         onClick={() => navigate("/")}
         className="svg-cross fa-regular fa-circle-xmark"
       ></i>
-      <button type="submit" className="prev-button" onClick={() => setStep(4)}>
+      <button type="submit" className="prev-button" onClick={() => setStep(3)}>
         <i className="fa-solid fa-arrow-left-long"></i>
       </button>
       <div className="step">
@@ -188,32 +188,11 @@ export default function CreateProject() {
           ))}
         </div>
       </div>
-      <button type="submit" className="next-button" onClick={() => setStep(6)}>
-        <i className="fa-solid fa-arrow-right-long"></i>
-      </button>
-    </div>
-  ) : step === 4 ? (
-    <div className="create-project">
-      <i
-        onClick={() => navigate("/")}
-        className="svg-cross fa-regular fa-circle-xmark"
-      ></i>
-      <button type="submit" className="prev-button" onClick={() => setStep(3)}>
-        <i className="fa-solid fa-arrow-left-long"></i>
-      </button>
-      <div className="step">
-        <CollabsDetails
-          data={datas}
-          canAddClass={
-            true
-          } /* selectedIds={selectedIds} setSelectedIds={setSelectedIds} */
-        />
-      </div>
       <button type="submit" className="next-button" onClick={() => setStep(5)}>
         <i className="fa-solid fa-arrow-right-long"></i>
       </button>
     </div>
-  ) : step === 3 ? (
+  ) :  step === 3 ? (
     <div className="create-project">
       <i
         onClick={() => navigate("/")}
@@ -236,9 +215,9 @@ export default function CreateProject() {
           )}
         </button>
       </div>
-      <button type="submit" className="next-button" onClick={() => setStep(4)}>
+      {selectedImage ? <button type="submit" className="next-button" onClick={() => setStep(4)}>
         <i className="fa-solid fa-arrow-right-long"></i>
-      </button>
+      </button> : null}
     </div>
   ) : step === 2 ? (
     <div className="create-project">
@@ -256,9 +235,9 @@ export default function CreateProject() {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <button type="submit" className="next-button" onClick={() => setStep(3)}>
+      {description ? <button type="submit" className="next-button" onClick={() => setStep(3)}>
         <i className="fa-solid fa-arrow-right-long"></i>
-      </button>
+      </button> : null}
     </div>
   ) : (
     <div className="create-project">
@@ -275,9 +254,9 @@ export default function CreateProject() {
         />
         <span></span>
       </div>
-      <button type="submit" className="next-button" onClick={() => setStep(2)}>
+      {title ? <button type="submit" className="next-button" onClick={() => setStep(2)}>
         <i className="fa-solid fa-arrow-right-long"></i>
-      </button>
+      </button> : null}
     </div>
   );
 }

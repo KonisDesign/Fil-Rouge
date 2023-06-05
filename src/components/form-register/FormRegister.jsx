@@ -3,15 +3,21 @@ import { useDropzone } from "react-dropzone";
 import "./FormRegister.scss";
 import FormInputLogin from "../form-input-login/FormInputLogin";
 import { useNavigate } from "react-router-dom";
-import ProfilePic from '../../../MySqlDotNetCoreBackend/public/profile.webp'
+import ProfilePic from "../../../MySqlDotNetCoreBackend/public/profile.webp";
 
 export default function FormRegister() {
+  const [Lastname, setLastname] = useState("");
+  const [Firstname, setFirstname] = useState("");
+  const [Job, setJob] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
 
   const onDrop = useCallback((acceptedFiles) => {
     setSelectedImage(acceptedFiles[0]);
-    console.log(acceptedFiles[0].name)
+    console.log(acceptedFiles[0].name);
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -28,20 +34,9 @@ export default function FormRegister() {
   const handleMouseLeave = () => {
     setIsActive(false);
   };
-  
+
   const handleRegister = async (event) => {
     event.preventDefault();
-    // Récupération des valeurs des champs de formulaire
-    const Lastname = document.querySelector(
-      'input[name="lastname-input"]'
-    ).value;
-    const Firstname = document.querySelector(
-      'input[name="firstname-input"]'
-    ).value;
-    const Email = document.querySelector('input[name="email-input"]').value;
-    const Password = document.querySelector(
-      'input[name="password-input"]'
-    ).value;
 
     handleUpload();
 
@@ -50,10 +45,14 @@ export default function FormRegister() {
     formData.append("Firstname", Firstname);
     formData.append("Email", Email);
     formData.append("Password", Password);
-    formData.append("Job", "");
+    formData.append("Job", Job);
     formData.append("Projects", "");
     formData.append("Role", "user");
-    formData.append("Url", selectedImage.name);
+    if (selectedImage) {
+      formData.append("Url", selectedImage.name);
+    } else {
+      formData.append("Url", "profile.webp");
+    }
 
     try {
       let object = {};
@@ -74,7 +73,7 @@ export default function FormRegister() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      navigate('/')
+      navigate("/");
     } catch (error) {
       console.log(
         "There was a problem with the fetch operation: " + error.message
@@ -84,20 +83,20 @@ export default function FormRegister() {
 
   const handleUpload = () => {
     const formData = new FormData();
-    formData.append('file', selectedImage);
+    formData.append("file", selectedImage);
 
-    fetch('http://localhost:5129/upload', {
-      method: 'POST',
-      body: formData
+    fetch("http://localhost:5129/upload", {
+      method: "POST",
+      body: formData,
     })
-    .then(response => {
-      console.log('Réponse du serveur :', response);
-      // Gérer la réponse du serveur
-    })
-    .catch(error => {
-      console.log('Erreur lors de la requête :', error);
-      // Gérer les erreurs
-    });
+      .then((response) => {
+        console.log("Réponse du serveur :", response);
+        // Gérer la réponse du serveur
+      })
+      .catch((error) => {
+        console.log("Erreur lors de la requête :", error);
+        // Gérer les erreurs
+      });
   };
 
   return (
@@ -130,25 +129,96 @@ export default function FormRegister() {
           </div>
           <div className="register-top-right">
             <div className="lastname-register">
-              <input type="text" name="lastname-input" />
-              <label className="login-label">Nom</label>
+              <input
+                type="text"
+                name="lastname-input"
+                value={Lastname}
+                onChange={(e) => setLastname(e.target.value)}
+              />
+              <label
+                className="login-label"
+                style={
+                  Lastname != ""
+                    ? { top: "10px", left: "5px", fontSize: "14px" }
+                    : null
+                }
+              >
+                Nom
+              </label>
             </div>
             <div className="firstname-register">
-              <input type="text" name="firstname-input" />
-              <label className="login-label">Prénom</label>
+              <input
+                type="text"
+                name="firstname-input"
+                value={Firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+              />
+              <label
+                className="login-label"
+                style={
+                  Firstname != ""
+                    ? { top: "10px", left: "5px", fontSize: "14px" }
+                    : null
+                }
+              >
+                Prénom
+              </label>
             </div>
           </div>
         </div>
       }
       divBottom={
         <div className="register-bottom">
+          <div className="job-register">
+            <input
+              type="text"
+              name="job-input"
+              onChange={(e) => setJob(e.target.value)}
+            />
+            <label
+              className="login-label"
+              style={
+                Job != ""
+                  ? { top: "10px", left: "5px", fontSize: "14px" }
+                  : null
+              }
+            >
+              Poste occupé
+            </label>
+          </div>
           <div className="email-register">
-            <input type="email" name="email-input" />
-            <label className="login-label">Adresse Email</label>
+            <input
+              type="email"
+              name="email-input"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <label
+              className="login-label"
+              style={
+                Email != ""
+                  ? { top: "10px", left: "5px", fontSize: "14px" }
+                  : null
+              }
+            >
+              Adresse Email
+            </label>
           </div>
           <div className="password-register">
-            <input type="password" name="password-input" />
-            <label className="login-label">Mot de passe</label>
+            <input
+              type="password"
+              name="password-input"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <label
+              className="login-label"
+              style={
+                Password != ""
+                  ? { top: "10px", left: "5px", fontSize: "14px" }
+                  : null
+              }
+            >
+              Mot de passe
+            </label>
           </div>
         </div>
       }

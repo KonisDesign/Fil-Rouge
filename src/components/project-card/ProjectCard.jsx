@@ -20,9 +20,6 @@ export default function ProjectCard(props) {
         console.log(error);
       });
   }, []);
-  useEffect(() => {
-    console.log(datas);
-  }, [datas]);
 
   if (!datas) {
     return null; // Retourner null ou un indicateur de chargement si les données ne sont pas encore disponibles
@@ -36,12 +33,13 @@ export default function ProjectCard(props) {
       <div className="row">
         {datas.map((user, userIndex) => {
           return user.projects.split(",").map((project) => {
-            if (project == props.id) {
+            if ((project == props.id) && userIndex < 8) {
               return (
                 <img
                   key={userIndex}
                   src={"../../../MySqlDotNetCoreBackend/public/" + user.url}
                   alt={user.firstname}
+                  style={{right: userIndex * 20 + 'px'}}
                 />
               );
             }

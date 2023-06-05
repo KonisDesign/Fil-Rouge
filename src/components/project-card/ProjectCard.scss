@@ -50,21 +50,7 @@
             object-fit: cover;
             position: absolute;
 
-            &:nth-child(1) {
-                right: 60px;
-            }
-
-            &:nth-child(2) {
-                right: 40px;
-            }
-
-            &:nth-child(3) {
-                right: 20px;
-            }
-
-            &:nth-child(4) {
-                right: 0px;
-            }
+           
         }
     }
 }

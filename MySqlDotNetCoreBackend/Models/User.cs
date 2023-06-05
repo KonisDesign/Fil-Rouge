@@ -6,10 +6,8 @@ namespace MySqlDotNetCoreBackend.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "L'adresse email est requise.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Le mot de passe est requis.")]
         public string Password { get; set; }
 
         public string Firstname { get; set; } = string.Empty;

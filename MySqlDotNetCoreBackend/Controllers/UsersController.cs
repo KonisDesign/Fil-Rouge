@@ -115,14 +115,25 @@ namespace MySqlDotNetCoreBackend.Controllers
                 return BadRequest();
             }
 
-            // Hash the new password before saving it
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            // Only hash the password if it's not null or empty
+            if (!string.IsNullOrEmpty(user.Password))
+            {
+                // Hash the new password before saving it
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            }
+            else
+            {
+                // Load the existing user from the database and keep the existing password
+                var existingUser = _context.Users.AsNoTracking().First(u => u.Id == id);
+                user.Password = existingUser.Password;
+            }
 
             _context.Entry(user).State = EntityState.Modified;
             _context.SaveChanges();
 
             return NoContent();
         }
+
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]

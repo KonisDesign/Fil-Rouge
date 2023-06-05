@@ -66,29 +66,20 @@ $orangehover : #fcc143;
             justify-content: center;
             font-size: 14px;
             cursor: pointer;
-        }
 
-        .normal {
-            background-color: $green;
-
-            &:hover {
-                background-color: $greenhover;
+            &:nth-child(odd) {
+                background-color: $green;
+                &:hover {
+                    background-color: $greenhover;
+                }
             }
-        }
 
-        .important {
-            background-color: $red;
+            &:nth-child(even) {
+                background-color: $red;
 
-            &:hover {
-                background-color: $redhover;
-            }
-        }
-
-        .other {
-            background-color: $orange;
-
-            &:hover {
-                background-color: $orangehover;
+                &:hover {
+                    background-color: $redhover;
+                }
             }
         }
     }

@@ -36,7 +36,7 @@ export default function Project() {
         setTitle(data.title);
         setSelectedImage(data.url);
         setDescription(data.description);
-        //setComments(Object.values(data.comments));
+        setComments(data.comments.split(","));
         if (data.notifications === "") {
           setNotifications(["Aucune notification"]);
         } else {
@@ -86,9 +86,12 @@ export default function Project() {
         (users[i].projects.split(",").includes(id) &&
           users[i].id === Number(userId))
       ) {
-        console.log("oui " + users[i].firstname);
+        console.log("je suis dans le projet");
+        console.log(users[i].id, "users[i].id");
+        console.log(users[i].email, "users[i].id");
+        console.log(Number(userId), "userId");
         if (users[i].role === "admin" && users[i].id === Number(userId)) {
-          console.log("admin");
+          console.log("je suis admin");
           setAdmin(true);
         }
 
@@ -138,24 +141,22 @@ export default function Project() {
     }
   };
 
-  const addComment = () => {
+  const addComment = (e, comment) => {
+    e.preventDefault();
+    console.log(comment);
     if (getComment.trim()) {
-      const newComment = [...comments];
-      newComment.push({
-        author: "kimono",
-        content: getComment,
-      });
+      const newComment = [...comments, comment];
       setComments(newComment);
+      console.log(newComment);
       setGetComment("");
     }
-    document.querySelector(".comment-container").scrollTop =
-      document.querySelector(".comment-container").scrollHeight;
+    updateRef.current.click();
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" || e.charCode === 13) {
       e.preventDefault();
-      addComment();
+      addComment(e, getComment);
     }
   };
 
@@ -166,8 +167,7 @@ export default function Project() {
       setTasks(newTask);
       setGetTasks("");
     }
-    document.querySelector(".comment-container").scrollTop =
-      document.querySelector(".comment-container").scrollHeight;
+    document.querySelector(".update-button").style.display = "block";
   };
 
   const handleKeyPressTask = (e) => {
@@ -185,18 +185,14 @@ export default function Project() {
   const addCollabs = async (event, user) => {
     event.preventDefault();
 
-    let bool = false;
     if (collabs.includes(user)) {
-      console.log("oui");
       const newCollabs = [...collabs];
       const index = newCollabs.indexOf(user);
       newCollabs.splice(index, 1);
       setCollabs(newCollabs);
-      bool = true;
     } else {
       const newCollabs = [...collabs, user];
       setCollabs(newCollabs);
-      console.log(newCollabs);
     }
 
     let formData = new FormData();
@@ -206,7 +202,7 @@ export default function Project() {
         formData.append("Lastname", u.lastname);
         formData.append("Firstname", u.firstname);
         formData.append("Email", u.email);
-        formData.append("Password", u.password);
+        formData.append("Password", localStorage.getItem("pass"));
         formData.append("Job", u.job);
         const projects = u.projects.split(",");
         const projectIndex = projects.indexOf(id);
@@ -277,7 +273,7 @@ export default function Project() {
     formData.append("Url", selectedImage);
     formData.append("Tasks", tasks.join(","));
     formData.append("Notifications", notifications.join(","));
-    formData.append("Comments", "test"); // Les commentaires sont un tableau d'objets, nous devons donc le convertir en chaîne avant de l'ajouter.
+    formData.append("Comments", comments.join(",") + "," + getComment); // Les commentaires sont un tableau d'objets, nous devons donc le convertir en chaîne avant de l'ajouter.
 
     // Je n'ai pas changé ceci parce que vous avez dit de ne pas toucher au FormData.
     for (var pair of formData.entries()) {
@@ -341,15 +337,13 @@ export default function Project() {
     <div className="project-container">
       <Header />
       <SideMain />
-      {admin ? (
-        <button
-          ref={updateRef}
-          className="update-button"
-          onClick={(event) => handleUpdate(event)}
-        >
-          Mettre à jour
-        </button>
-      ) : null}
+      <button
+        ref={updateRef}
+        className="update-button"
+        onClick={(event) => handleUpdate(event)}
+      >
+        Mettre à jour
+      </button>
       <div className="project-description">
         <div className="infos">
           <input
@@ -431,7 +425,7 @@ export default function Project() {
                         src={
                           "../../../MySqlDotNetCoreBackend/public/" + user.url
                         }
-                        style={{ filter: "grayscale(90%)" }}
+                        style={{ filter: "grayscale(90%)", cursor: "pointer" }}
                         onClick={(event) => addCollabs(event, user.id)}
                       />
                     );
@@ -442,6 +436,7 @@ export default function Project() {
               onClick={() => displayCollabs()}
               src="/src/assets/add.png"
               alt="photo de profil d'un membre"
+              style={{ cursor: "pointer" }}
             />
           </>
         )}
@@ -497,22 +492,28 @@ export default function Project() {
         <div className="work">
           <h2>Commentaires</h2>
           <div className="comment-container">
-            {comments.map((comment, index) => (
-              <div key={index} className="item comment">
-                {comment.content}
-              </div>
-            ))}
+            {comments.map((comment, index) =>
+              comment !== "" ? (
+                <div key={index} className="item comment">
+                  {comment}
+                </div>
+              ) : null
+            )}
           </div>
+
           <div className="actions">
             <input
               id="input-comment"
               type="text"
               placeholder="Écrivez quelque chose..."
-              onKeyDown={handleKeyPress}
+              onKeyDown={(e) => handleKeyPress(e)}
               value={getComment}
               onChange={(e) => setGetComment(e.target.value)}
             />
-            <button className="send-button" onClick={() => addComment()}>
+            <button
+              className="send-button"
+              onClick={(e) => addComment(e, getComment)}
+            >
               <i className="fa-regular fa-paper-plane"></i>
             </button>
           </div>
@@ -527,6 +528,6 @@ export default function Project() {
       )}
     </div>
   ) : (
-    <div>nique</div>
+    <div>Non trouvé</div>
   );
 }

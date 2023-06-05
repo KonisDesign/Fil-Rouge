@@ -9,14 +9,33 @@ export default function SideMain() {
 
   const [user, setUser] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:5129/Users/" + userId)
-      .then((response) => response.json())
-      .then((data) => {
+    async function fetchUser() {
+      try {
+        const response = await fetch(`http://localhost:5129/Users/${userId}`);
+        const data = await response.json();
         setUser(data);
-      });
-  });
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      }
+    }
+    fetchUser();
+  }, [userId]);
 
-  if (!user) {
+  const [projects, setProjects] = useState(null);
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const response = await fetch("http://localhost:5129/Projects");
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      }
+    }
+    fetchProjects();
+  }, []);
+
+  if (!user || !projects) {
     return null; // Retourner null ou un indicateur de chargement si les données ne sont pas encore disponibles
   }
 
@@ -30,18 +49,14 @@ export default function SideMain() {
       <h2>Bonjour {user.firstname}</h2>
       <div className="notifs-container">
         <h4>Dernières notifications</h4>
-        <div className="notif normal">
-          <p>La tâche "Elementor" du projet "Wordpress" est terminée.</p>
-        </div>
-        <div className="notif normal">
-          <p>La tâche "Elementor" du projet "Wordpress" est terminée.</p>
-        </div>
-        <div className="notif important">
-          <p>La tâche "Elementor" du projet "Wordpress" est terminée.</p>
-        </div>
-        <div className="notif other">
-          <p>La tâche "Elementor" du projet "Wordpress" est terminée.</p>
-        </div>
+        {projects &&
+          projects.map((project) => (
+            project.notifications === "" || project.notifications === 'Aucune notification' ? null : (
+              <div key={project.id} className="notif">
+                <p>{project.notifications}</p>
+              </div>
+            )
+          ))}
       </div>
       <footer>
         <p>&copy; Designed by Romain & Julien</p>
